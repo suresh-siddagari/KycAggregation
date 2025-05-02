@@ -10,12 +10,12 @@ namespace KycApi.Model
     public class ContactDetail
     {
         [JsonPropertyName("address")]
-        public List<Address> Address { get; set; }
+        public List<Address> Address { get; set; } = new();
 
         [JsonPropertyName("emails")]
-        public List<Email> Emails { get; set; }
+        public List<Email> Emails { get; set; } = new();
 
         [JsonPropertyName("phone_numbers")]
-        public List<PhoneNumber> PhoneNumbers { get; set; }
+        public List<PhoneNumber> PhoneNumbers { get; set; } = new();
     }
 }

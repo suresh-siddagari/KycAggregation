@@ -10,7 +10,7 @@ namespace KycApi.Model
     public class AggregatedKyc
     {
         [JsonPropertyName("ssn")]
-        public string Ssn { get; set; }
+        public string Ssn { get; set; } = "";
 
         [JsonPropertyName("first_name")]
         public string FirstName { get; set; }
