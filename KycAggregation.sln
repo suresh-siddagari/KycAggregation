@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KycApi.Service", "KycApi.Se
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KycApi.Model", "KycApi.Model\KycApi.Model.csproj", "{45AEEA47-3668-4262-B42D-9AB54AB7F218}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KycApi.Service.Test", "KycApi.Service.Test\KycApi.Service.Test.csproj", "{AE6575AD-D96D-445D-9759-D188F5434CD7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{45AEEA47-3668-4262-B42D-9AB54AB7F218}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45AEEA47-3668-4262-B42D-9AB54AB7F218}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45AEEA47-3668-4262-B42D-9AB54AB7F218}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE6575AD-D96D-445D-9759-D188F5434CD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE6575AD-D96D-445D-9759-D188F5434CD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE6575AD-D96D-445D-9759-D188F5434CD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE6575AD-D96D-445D-9759-D188F5434CD7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
