@@ -4,44 +4,40 @@ namespace KycApi.Service.Test
 {
     public class AggregatedKycServiceTest
     {
-        // Test method : GetContactDetails
-        // Test case: Valid SSN and Customer data does not exist
-        // Expected result: Returns null
+        private readonly HttpClient _httpClient;
+        private readonly AggregatedKycService _service;
 
-        [Fact]
-        public async Task GetContactDetails_ValidSsn_CustomerDataDoesNotExist_ReturnsNull()
+        public AggregatedKycServiceTest()
         {
-            // Arrange
-            var httpClient = new HttpClient();
-            var service = new AggregatedKycService(httpClient);
-            string ssn = "19900101-1234";
-
-            // Act
-            var result = await service.GetContactDetails(ssn);
-
-            // Assert
-            Assert.True(result == null); // should be null as customer data does not exist
+            _httpClient = new HttpClient();
+            _service = new AggregatedKycService(_httpClient);
         }
 
         // Test method : GetContactDetails
-        // Test case: Valid SSN and Customer data exists
-        // Expected result: Contact details of the customer
-        [Fact]
-        public async Task GetContactDetails_ValidSsn_CustomerDataExists_ReturnsContactDetails()
-        {
-            // Arrange
-            var httpClient = new HttpClient();
-            var service = new AggregatedKycService(httpClient);
-            string ssn = "19800115-1234";
+        // Test case 1: Valid SSN + Customer data does not exist => null
+        // Test case 2: Valid SSN + Customer data exists => Contact details of the customer
 
+
+        [Theory]
+        [InlineData("19900101-1234", false)] // Customer data does not exist
+        [InlineData("19800115-1234", true)]  // Customer data exists
+        public async Task GetContactDetails_ValidSsn_ReturnsExpectedResult(string ssn, bool customerExists)
+        {
             // Act
-            var result = await service.GetContactDetails(ssn);
+            var result = await _service.GetContactDetails(ssn);
 
             // Assert
-            Assert.NotNull(result); // should not be null as customer data exists
-            Assert.True(result.Address.Count > 0); // should have at least one address
-            Assert.True(result.Emails.Count > 0); // should have at least one email
-            Assert.True(result.PhoneNumbers.Count > 0); // should have at least one phone number
+            if (!customerExists)
+            {
+                Assert.Null(result); // should be null as customer data does not exist
+            }
+            else
+            {
+                Assert.NotNull(result); // should not be null as customer data exists
+                Assert.NotEmpty(result.Address); // should have at least one address
+                Assert.NotEmpty(result.Emails); // should have at least one email
+                Assert.NotEmpty(result.PhoneNumbers); // should have at least one phone number
+            }
         }
     }
 }
