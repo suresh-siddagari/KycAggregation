@@ -6,12 +6,12 @@ namespace KycApi.Service.Implementation
 {
     public class AggregatedKycService : IAggregatedKycService
     {
-        private readonly HttpClient _httpClient;
-        private const string customerdataurl = "https://8ea49aa1-2446-43f0-8da4-5100c85e931f-00-2dhb5v2olpjzv.worf.replit.dev/api/";
+        private readonly IDataService _dataService;
+        private const string customerdataurl = "https://8ea49aa1-2446-43f0-8da4-5100c85e931f-00-2dhb5v2olpjzv.worf.replit.dev/api/"; //TODO: move to app.settings.json
 
-        public AggregatedKycService(HttpClient httpClient)
+        public AggregatedKycService(IDataService dataService)
         {
-            _httpClient = httpClient;
+            _dataService = dataService;
         }
 
         // get aggregated kyc data of a customer
@@ -74,10 +74,7 @@ namespace KycApi.Service.Implementation
 
         private async Task<T?> FetchData<T>(string url) where T : class
         {
-            var response = await _httpClient.GetAsync(url);
-            return response.IsSuccessStatusCode
-                ? await response.Content.ReadFromJsonAsync<T>()
-                : null;
+            return await _dataService.GetData<T>(url);
         }
     }
 }

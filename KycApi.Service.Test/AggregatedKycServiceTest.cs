@@ -1,22 +1,26 @@
 ﻿using KycApi.Service.Implementation;
+using KycApi.Service.Interface;
 
 namespace KycApi.Service.Test
 {
     public class AggregatedKycServiceTest
     {
+        private readonly IDataService _dataService;
+        private readonly IAggregatedKycService _service;
+        private readonly ICacheService _cacheService;
         private readonly HttpClient _httpClient;
-        private readonly AggregatedKycService _service;
 
         public AggregatedKycServiceTest()
         {
             _httpClient = new HttpClient();
-            _service = new AggregatedKycService(_httpClient);
+            _cacheService = new CacheService();
+            _dataService = new DataService(_httpClient, _cacheService);
+            _service = new AggregatedKycService(_dataService);
         }
 
         // Test method : GetContactDetails
         // Test case 1: Valid SSN + Customer data does not exist => null
         // Test case 2: Valid SSN + Customer data exists => Contact details of the customer
-
 
         [Theory]
         [InlineData("19900101-1234", false)] // Customer data does not exist
