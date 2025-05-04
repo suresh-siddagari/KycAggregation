@@ -1,4 +1,5 @@
-﻿using KycApi.Service.Implementation;
+﻿using KycApi.Model;
+using KycApi.Service.Implementation;
 using KycApi.Service.Interface;
 
 namespace KycApi.Service.Test
@@ -42,6 +43,31 @@ namespace KycApi.Service.Test
                 Assert.NotEmpty(result.Emails); // should have at least one email
                 Assert.NotEmpty(result.PhoneNumbers); // should have at least one phone number
             }
+        }
+
+        //Test method : GetPersonalData
+        // Test case : After fetching data from API, cached should be updated
+        [Fact]
+        public async Task GGetPersonalData_FetchData_ShouldUpdateCache()
+        {
+            //Arrange
+            var remoteAPI = "https://8ea49aa1-2446-43f0-8da4-5100c85e931f-00-2dhb5v2olpjzv.worf.replit.dev/api/"; //TODO: move to config file
+            var ssn = "19800115-1234";
+            var personalDetailsUrl = $"{remoteAPI}/personal-details/{ssn}";
+
+            //Act
+            //check cache before fetching data
+            var cachedDataBefore = _cacheService.Get<PersonDetail>(personalDetailsUrl.GetHashCode().ToString());
+            var result = await _service.GetPersonalData(ssn);
+            //check cache after fetching data
+            var cachedDataAfter = _cacheService.Get<PersonDetail>(personalDetailsUrl.GetHashCode().ToString());
+
+            // Assert
+            Assert.Null(cachedDataBefore); // should be null before fetching data
+            Assert.NotNull(result); // should not be null as customer data exists
+            Assert.NotNull(cachedDataAfter); // should not be null after fetching data
+            Assert.Equal(result.FirstName, cachedDataAfter.FirstName); // should be same as fetched data
+            Assert.Equal(result.LastName, cachedDataAfter.LastName); // should be same as fetched data
         }
     }
 }
